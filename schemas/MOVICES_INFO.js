@@ -13,6 +13,8 @@ module.exports = new mon.Schema({
 
     m_desc: String,
 
-    m_img: String
+    m_img: String,
+
+    m_swaper: Boolean
 
 })

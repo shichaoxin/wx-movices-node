@@ -26,7 +26,7 @@ var messageCode = {
 router.post('/userInfo', (req, res, next) => {
     USERINFO.findOne({
         userName: req.body.userName,
-        userPassword: req.body.userPassword
+        password: req.body.password
     }).then((result) => {
         if (result) {
             const messageInfo = {
