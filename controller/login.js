@@ -52,7 +52,8 @@ router.post('/userInfo', (req, res, next) => {
                 success: true,
                 token: 'bear' + '123434rgdsfgsrtert45tweregf',
                 messageInfo
-            })
+            });
+            console.log('success for login')
         } else {
             const messageInfo = {
                 code: messageCode.messageNotFound,
@@ -89,6 +90,47 @@ router.post('/register', (req, res, next) => {
                 token: 'bear' + '123434rgdsfgsrtert45tweregf'
             }
             return res.status(200).send(messageInfo);
+        }
+    })
+});
+
+/**
+ * 获取用户信息集合分页模式
+ */
+router.post('/getsUserInfoByPage', (req, res, next) => {
+    const page = +req.body.currentPage;
+    const size = +req.body.currentSize;
+    const limit = size;
+    const skip = (page - 1) * limit;
+    USERINFO.countDocuments().then((total) => {
+        USERINFO.find().limit(limit).skip(skip).then((val) => {
+            const message = {
+                result: val,
+                total: total
+            }
+            console.log('获取用户信息集合分页模式-success')
+            return res.json(message);
+        })
+    })
+});
+
+/**
+ * 根据用户的id删除用户信息
+ */
+router.delete('/deleteUserInfoByUserId', (req, res, next) => {
+    const userId = req.query.id;
+    // 操作者的Id信息====> 0是超级管理员，1是管理员，2是VIP 3是普通用户
+    const roleId = +req.query.roleId;
+    USERINFO.findById({ _id: userId }).then((val) => {
+        if (roleId < +val.userRole) {
+            // 可以删除
+            USERINFO.findByIdAndDelete({ _id: userId }).then((val) => {
+                console.log('删除用户信息成功')
+                return res.send(true);
+            })
+        } else {
+            console.log('权限不够')
+            return res.status(401).send(false);
         }
     })
 })

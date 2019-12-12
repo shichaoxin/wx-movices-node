@@ -164,6 +164,7 @@ router.post('/saveEvenation', (req, res, next) => {
         addEvenation.time = data.time;
         addEvenation.contentText = data.contentText;
         addEvenation.save();
+        console.log('------保存评价信息成功-----------')
         return res.status(200).send(true);
     }
 });
@@ -179,6 +180,7 @@ router.get('/getMoviesMessageByMoviesId', (req, res, next) => {
         ADDEVENATION.find({
             evenationMoviceId: id
         }).then((val) => {
+            console.log('----------获取评论信息成功----------')
             return res.status(200).json(val);
         });
     }

@@ -15,7 +15,7 @@ app.all('*', function (req, res, next) {
         res.sendStatus(200);
     } else {
         /*防止异步造成多次响应，出现错误*/
-        var _send = res.send;  
+        var _send = res.send;
         var sent = false;
         res.send = function (data) {
             if (sent) return;
@@ -53,7 +53,7 @@ app.use('/api/v1', require('./controller/main'));
 // app.use('/api/v1', require('./controller/config'));
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:10001/demo', { useNewUrlParser: true }, (erorr) => {
+mongoose.connect('mongodb://localhost:10001/demo', { useNewUrlParser: true, useUnifiedTopology: true }, (erorr) => {
     if (erorr) {
         console.log('no')
     } else {
