@@ -119,10 +119,10 @@ router.post('/getsUserInfoByPage', (req, res, next) => {
  */
 router.delete('/deleteUserInfoByUserId', (req, res, next) => {
     const userId = req.query.id;
-    // 操作者的Id信息====> 0是超级管理员，1是管理员，2是VIP 3是普通用户
+    // 操作者的Id信息====> 0是超级管理员，1是管理员，2是VIP 3是普通用户(2,3都是用户不可以删除)
     const roleId = +req.query.roleId;
     USERINFO.findById({ _id: userId }).then((val) => {
-        if (roleId < +val.userRole) {
+        if (roleId < +val.userRole && roleId !== 2) {
             // 可以删除
             USERINFO.findByIdAndDelete({ _id: userId }).then((val) => {
                 console.log('删除用户信息成功')

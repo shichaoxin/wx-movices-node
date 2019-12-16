@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({
 //路由处理 根据不同的功能划分模块
 app.use('/api/v1', require('./controller/login'));
 app.use('/api/v1', require('./controller/main'));
-// app.use('/api/v1', require('./controller/config'));
+app.use('/api/v1', require('./controller/event'));
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:10001/demo', { useNewUrlParser: true, useUnifiedTopology: true }, (erorr) => {
